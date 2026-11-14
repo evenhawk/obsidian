@@ -30,6 +30,8 @@ _vault-backups/
 .obsidian/workspace
 .obsidian/cache
 .obsidian/plugins/*/data-local.json
+# Git 插件设置：电脑用它自动提交，平板用 GitSync，同步过去会两边抢着提交
+.obsidian/plugins/obsidian-git/data.json
 
 # ===== 系统垃圾文件 =====
 .DS_Store
