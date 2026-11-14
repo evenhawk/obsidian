@@ -2,5 +2,6 @@
   "theme": "moonstone",
   "accentColor": "#ff770f",
   "cssTheme": "Dracula Official",
-  "nativeMenus": true
+  "nativeMenus": true,
+  "showRibbon": true
 }
