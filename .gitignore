@@ -1,0 +1,39 @@
+﻿# ===== 大文件：不纳入 Git =====
+# PDF / 电子书 体积大，GitHub 有 100MB 单文件硬限制，且平板拉取会非常慢
+*.pdf
+*.epub
+*.mobi
+*.djvu
+# 压缩包 / 音视频
+*.zip
+*.7z
+*.rar
+*.tar
+*.gz
+*.mp4
+*.mov
+*.mkv
+*.mp3
+# 安装包
+*.exe
+*.msi
+*.dmg
+
+# ===== 旧备份与回收站 =====
+.codex-backups/
+_vault-backups/
+.trash/
+
+# ===== Obsidian 本机状态（每台设备各自独立，不应同步）=====
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/workspace
+.obsidian/cache
+.obsidian/plugins/*/data-local.json
+
+# ===== 系统垃圾文件 =====
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp
+~$*

@@ -1,0 +1,144 @@
+
+/* ---------- 基础行距 ---------- */
+.markdown-source-view.mod-cm6 .cm-line {
+    line-height: 1.8 !important;
+}
+
+.markdown-preview-view p,
+.markdown-preview-view li {
+    line-height: 1.8 !important;
+}
+
+/* ---------- 标题行距（更紧凑） ---------- */
+.markdown-preview-view h1,
+.markdown-preview-view h2,
+.markdown-preview-view h3,
+.markdown-preview-view h4,
+.markdown-preview-view h5,
+.markdown-preview-view h6 {
+    line-height: 1.4 !important;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+/* ---------- 列表缩进引导线（IDE 风格） ---------- */
+.markdown-preview-view ul,
+.markdown-preview-view ol {
+    padding-left: 1.5em;
+}
+
+.markdown-preview-view ul ul,
+.markdown-preview-view ol ol,
+.markdown-preview-view ul ol,
+.markdown-preview-view ol ul {
+    border-left: 1px solid var(--background-modifier-border);
+    margin-left: 0.2em;
+    padding-left: 1.2em;
+}
+
+/* ---------- 任务列表美化 ---------- */
+.markdown-preview-view .task-list-item-checkbox {
+    margin-right: 0.5em;
+}
+
+/* ---------- 引用块样式 ---------- */
+.markdown-preview-view blockquote {
+    line-height: 1.7 !important;
+    border-left: 3px solid var(--interactive-accent);
+    padding-left: 1em;
+    margin-left: 0;
+    background-color: var(--background-primary-alt);
+    border-radius: 0 4px 4px 0;
+    padding: 0.5em 1em;
+}
+
+/* ---------- 代码块美化（IDE 感） ---------- */
+.markdown-preview-view pre {
+    line-height: 1.6 !important;
+    border-radius: 6px;
+    padding: 1em;
+}
+
+.markdown-preview-view code {
+    font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
+    font-size: 0.9em;
+}
+
+/* 行内代码 */
+.cm-s-obsidian span.cm-inline-code,
+.markdown-preview-view code:not(pre code) {
+    background-color: var(--background-primary-alt);
+    padding: 0.15em 0.4em;
+    border-radius: 3px;
+    color: var(--text-accent);
+}
+
+/* ---------- 表格样式 ---------- */
+.markdown-preview-view table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1em 0;
+}
+
+.markdown-preview-view th {
+    background-color: var(--background-primary-alt);
+    font-weight: 600;
+    padding: 0.6em 1em;
+    border: 1px solid var(--background-modifier-border);
+}
+
+.markdown-preview-view td {
+    padding: 0.5em 1em;
+    border: 1px solid var(--background-modifier-border);
+}
+
+.markdown-preview-view tr:nth-child(even) {
+    background-color: var(--background-secondary);
+}
+
+/* ---------- 链接样式 ---------- */
+.markdown-preview-view a {
+    text-decoration: none;
+    color: var(--text-accent);
+}
+
+.markdown-preview-view a:hover {
+    text-decoration: underline;
+}
+
+/* ---------- 图片居中 + 圆角 ---------- */
+.markdown-preview-view img {
+    display: block;
+    margin: 1em auto;
+    border-radius: 6px;
+    max-width: 100%;
+}
+
+/* ---------- 标签页样式微调 ---------- */
+.workspace-tab-header {
+    border-radius: 4px 4px 0 0;
+}
+
+/* ---------- 滚动条美化 ---------- */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--background-modifier-border);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--background-modifier-border-hover);
+}
+
+/* ---------- 隐藏拼写检查红线（可选） ---------- */
+.cm-spell-error {
+    text-decoration: none !important;
+}

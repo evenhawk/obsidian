@@ -1,0 +1,14 @@
+{
+  "tabSize": 4,
+  "userIgnoreFilters": [
+    "90-附件与示例/attachments/"
+  ],
+  "alwaysUpdateLinks": true,
+  "uriCallbacks": false,
+  "attachmentFolderPath": "90-附件与示例/attachments",
+  "showLineNumber": true,
+  "readableLineLength": false,
+  "strictLineBreaks": false,
+  "foldIndent": true,
+  "showIndentGuide": true
+}
