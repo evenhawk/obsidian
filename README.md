@@ -1,4 +1,4 @@
-﻿# Obsidian 笔记库
+# Obsidian 笔记库
 
 个人知识库，通过 Git 在电脑和 Android 平板之间同步。
 
