@@ -16,33 +16,33 @@ updated: 2026-11-15
 
 使用不同的训练框架得到各自框架的模型
 
-然后统一转换为ONNX格式
+然后统一转换为 **ONNX** 格式
 
 把这个中间格式放在硬件本地安装的推理框架上去运行
 
 ![[ONNX-部署架构图.png]]
 
-训练框架：
+**训练框架：**
 
-1. PyTorch
-2. TensorFlow
-3. keras
+1. **PyTorch**
+2. **TensorFlow**
+3. **keras**
 
 不同的训练框架兼容的硬件设备不同
 
 ONNX格式在这里起到了桥梁的作用
 
-TensorRT 硬件为英伟达GPU
+**TensorRT** 硬件为英伟达 GPU
 
-OpenVINO 硬件为英特尔CPU
+**OpenVINO** 硬件为英特尔 CPU
 
 ## ONNX介绍
 
-详情见：YOLO26 模型的 ONNX 导出 | Ultralytics
+*详情见：YOLO26 模型的 ONNX 导出 | Ultralytics*
 
-ONNX(open neural network exchange)
+ONNX(*open neural network exchange*)
 
-ONNX，即开放神经网络交换
+ONNX，即**开放神经网络交换**
 
 是一种开放文件格式，用于表示机器学习模型，使这些模型能够在不同的 AI 框架和硬件上使用。
 
@@ -52,15 +52,15 @@ ONNX，即开放神经网络交换
 4. 兼容各种终端硬件
 5. 兼容各种操作系统
 
-ONNX模型可用于在不同框架之间无缝迁移
+ONNX模型可用于在不同框架之间**无缝迁移**
 
 例如，在 PyTorch 中训练的深度学习模型可以导出为 ONNX 格式，然后导入 TensorFlow。
 
-ONNX 模型还可以与 ONNX Runtime 配合使用
+ONNX 模型还可以与 **ONNX Runtime** 配合使用
 
 ONNX Runtime 是一款通用的跨平台机器学习模型加速器，兼容 PyTorch、TensorFlow 等框架。
 
-通过ultralytics快速导出
+通过 ultralytics 快速导出
 
 ```python
 from ultralytics import YOLO
@@ -99,7 +99,7 @@ with open("yolo11n_graph.txt", "w", encoding="utf-8") as f:
 print("图信息已保存到 yolo11n_graph.txt")
 ```
 
-导出的ONNX有两种量化模式
+**导出的ONNX有两种量化模式**
 
 分别的导出命令如下：
 
@@ -116,37 +116,37 @@ model.export(format="onnx")  # 创建 'yolo26n.onnx'
 model.export(format="onnx", quantize=8, data="coco8.yaml")  # 创建 'yolo26n_int8.onnx'
 ```
 
-两个不同量化的区别：
+**两个不同量化的区别：**
 
 最大区别在于量化后
 
-模型的文件大小减半
+模型的文件大小**减半**
 
-但在Intel的cpu上运行速度翻倍
+但在Intel的cpu上运行速度**翻倍**
 
-但是精度会减少一点
+但是精度会**减少一点**
 
 | 项目 | FP32 onnx（不加 quantize） | INT8 量化 onnx（quantize=8 + data） |
 | --- | --- | --- |
 | 张量数据类型 | 全部 float32 | 权重、激活走 int8，靠 QuantizeLinear / DequantizeLinear 转换 |
 | 文件大小 | 大 | 大约减半 |
 | 图节点 | 只有卷积、BN、SiLU 等算子 | 多了大量 QuantizeLinear / DequantizeLinear 节点 |
-| 是否需要校准集 | 不需要 | 必须，用 coco8.yaml 里的图片统计激活范围 |
+| 是否需要校准集 | 不需要 | **必须**，用 coco8.yaml 里的图片统计激活范围 |
 | 推理速度 | 慢 | CPU / Intel NPU 明显更快；N 卡要看硬件 |
 | 精度 | 最好，几乎和 PT 原模型一致 | 有小幅精度损失，校准集和真实业务越接近损失越小 |
 | 适合后端 | TensorRT、OpenVINO、ORT 都友好 | 优先 OpenVINO / ORT CPU；原生 TensorRT 不太推荐 |
 
 ## OpenVINO介绍
 
-详情见：Intel OpenVINO 导出 | Ultralytics
+*详情见：Intel OpenVINO 导出 | Ultralytics*
 
-OpenVINO 是 Open Visual Inference & Neural Network Optimization toolkit 的简称
+OpenVINO 是 *Open Visual Inference & Neural Network Optimization toolkit* 的简称
 
 是一套用于优化和部署 AI 推理模型的综合工具包。
 
-同样也可以按照int8量化
+同样也可以按照 **int8** 量化
 
-把最后一条指令改为：model.export(format="openvino", quantize=8, data="coco8.yaml")
+把最后一条指令改为：`model.export(format="openvino", quantize=8, data="coco8.yaml")`
 
 导出OpenVINO模型
 
@@ -162,9 +162,9 @@ model.export(format="openvino")
 
 ## TensorRT介绍
 
-详情见：YOLO26 模型的 TensorRT 导出 | Ultralytics
+*详情见：YOLO26 模型的 TensorRT 导出 | Ultralytics*
 
-TensorRT由NVIDIA开发，是一款先进的软件开发套件 (SDK)，专为高速深度学习推理而设计。
+TensorRT由 **NVIDIA** 开发，是一款先进的软件开发套件 (SDK)，专为高速深度学习推理而设计。
 
 CLI导出tensorRT模型
 
@@ -176,9 +176,9 @@ trtexec --onnx=yolo26n.onnx --saveEngine=yolo26n_fp32.engine #开启全精度
 
 ## 原生PyTorch模型/ONNX模型/OpenVINO推理时间对比
 
-使用的是撞线计数的数据标注和模型训练(YOLO)里训练完的best.pt模型
+使用的是撞线计数的数据标注和模型训练(YOLO)里训练完的 `best.pt` 模型
 
-结果：
+**结果：**
 
 ![[YOLO-推理耗时对比.png]]
 

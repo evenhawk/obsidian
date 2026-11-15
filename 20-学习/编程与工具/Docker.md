@@ -10,21 +10,21 @@ updated: 2026-11-15
 
 # Docker 学习
 
-sudo : superuser do
+`sudo` : superuser do
 
-授权用户临时以其他用户身份（默认 root）执行单条命令，输入自己账号密码而非 root 密码。
+授权用户临时以其他用户身份（默认 root）执行单条命令，输入**自己账号密码**而非 root 密码。
 
-（本文命令省略了 sudo，如果你的用户不在 docker 组里，执行时自行加上。）
+*（本文命令省略了 `sudo`，如果你的用户不在 docker 组里，执行时自行加上。）*
 
 ## 运行容器
 
-以运行nginx举例：
+以运行 `nginx` 举例：
 
 ```bash
 docker run nginx
 ```
 
-但这样会占用一个窗口，所以更常见的启动方式是
+但这样会 ==占用一个窗口==，所以更常见的启动方式是
 
 ```bash
 docker run -d nginx
@@ -32,7 +32,7 @@ docker run -d nginx
 
 查看正在运行的容器：
 
-ps : process status
+`ps` : process status
 
 ```bash
 docker ps
@@ -44,13 +44,13 @@ docker ps
 docker rm <container id>
 ```
 
-如果容器正在运行，需要加上 -f 表示强制（force）删除
+如果容器正在运行，需要加上 `-f` 表示**强制**（force）删除
 
 ```bash
 docker rm -f <container id>
 ```
 
-删除容器是rm,删除镜像是rmi
+删除容器是 `rm`,删除镜像是 `rmi`
 
 常用docker ps 选项表格:
 
@@ -76,13 +76,13 @@ PS输出字段含义：
 
 ### 端口映射
 
-端口映射参数 -p
+端口映射参数 `-p`
 
 在docker中，容器和宿主机的网络是隔离的，并不能从宿主机直接访问容器内网络
 
 如果在容器内启动一个服务，假设端口是80，在浏览器并不能访问容器的80端口
 
-这时候需要添加一个启动参数，把容器内的端口和主机的端口做一个端口映射,比如这样 -p 80:80
+这时候需要添加一个启动参数，把容器内的端口和主机的端口做一个端口映射,比如这样 `-p 80:80`
 
 这时候浏览器就可以正常访问了
 
@@ -92,17 +92,17 @@ docker run -p 80:80 nginx
 
 ## 挂载卷
 
-容器里的数据默认存在容器内部，容器删除，数据跟着消失；挂载卷就是把宿主机的一块存储空间 “接入” 容器，实现数据持久化。
+容器里的数据默认存在容器内部，容器删除，数据跟着消失；挂载卷就是把宿主机的一块存储空间 “接入” 容器，实现==数据持久化==。
 
-与 -p 绑定端口类似的参数是 -v (volume)
+与 `-p` 绑定端口类似的参数是 `-v` (volume)
 
--p 是把宿主机与容器的端口进行绑定，而 -v 是把宿主机与容器的文件目录进行绑定
+`-p` 是把宿主机与容器的**端口**进行绑定，而 `-v` 是把宿主机与容器的**文件目录**进行绑定
 
 绑定后宿主机的文件夹和容器的文件夹会相互影响
 
 ### 绑定挂载
 
-直接把宿主机目录写在docker run 命令中，这种方式叫做绑定挂载
+直接把宿主机目录写在 `docker run` 命令中，这种方式叫做绑定挂载
 
 ```bash
 docker run -p 80:80 -v <宿主机目录>:<容器目录> nginx
@@ -183,9 +183,9 @@ docker run -d \
 docker run -d --name <NAMES> nginx
 ```
 
-名字在宿主机上必须是唯一的
+==名字在宿主机上必须是唯一的==
 
-这里面的NAMES和CONTAINER ID 是等价的，使用ID的地方都可以用NAMES来代替
+这里面的 **NAMES** 和 **CONTAINER ID** 是等价的，使用ID的地方都可以用 **NAMES** 来代替
 
 ### 参数 -it 和 --rm
 
@@ -196,11 +196,11 @@ docker run -d --name <NAMES> nginx
 | `-it` | `-i -t` | 组合使用：交互式终端，可以进入容器内部操作 |
 | `--rm` | （无） | 容器停止退出后，自动删除这个容器（不保留容器实例） |
 
-必须组合使用 -i -t，简写 -it，单独 -i 或者单独 -t基本很少用。
+必须==组合使用== `-i -t`，简写 `-it`，单独 `-i` 或者单独 `-t` 基本很少用。
 
 适用场景：需要进入容器、在容器里面敲命令。
 
---rm：容器一旦停止，自动删掉容器本身。
+`--rm`：容器一旦停止，自动删掉容器本身。
 
 组合使用用来调试容器
 
@@ -210,9 +210,9 @@ docker run -it --rm <镜像名>
 
 ### 参数 --restart
 
-用来配置容器在停止时的重启策略
+用来配置容器在停止时的**重启策略**
 
-常用的有 --restart always
+常用的有 `--restart always`
 
 只要容器停止了就立刻重启，包含内部崩溃和外部宿主机断电等场景
 
@@ -220,7 +220,7 @@ docker run -it --rm <镜像名>
 docker run -d --restart always nginx
 ```
 
-如果把always换成 unless-stopped
+如果把 `always` 换成 `unless-stopped`
 
 则手动停止的容器就不会尝试重启
 
@@ -232,7 +232,7 @@ docker run -d --restart unless-stopped nginx
 
 ### 容器的启停与检查
 
-每次使用docker run 命令都是创建一个新容器
+每次使用 `docker run` 命令都是创建一个==新==容器
 
 如果想对原有容器进行一个启停，可以使用下面的两个命令
 
@@ -241,27 +241,27 @@ docker start <容器ID>/<名字>
 docker stop <容器ID>/<名字>
 ```
 
-查看容器的参数使用inspect
+查看容器的参数使用 `inspect`
 
 ```bash
 docker inspect <容器ID>
 ```
 
-输出内容很长，建议丢给AI分析
+输出内容很长，*建议丢给AI分析*
 
 ### 创建容器
 
-使用run会创建并运行，如果要先创建不运行的话使用create新建一个容器
+使用 `run` 会创建并运行，如果要先创建不运行的话使用 `create` 新建一个容器
 
 ```bash
 docker create <镜像名>
 ```
 
-创建之后再 start 就可以运行了
+创建之后再 `start` 就可以运行了
 
 ### 日志
 
-要查看日志可以使用 logs
+要查看日志可以使用 `logs`
 
 ```bash
 docker logs <容器名>/<容器ID>
@@ -271,10 +271,10 @@ docker logs <容器名>/<容器ID>
 
 Docker 利用了Linux内核的两大原生功能实现容器化
 
-1. Cgroups用来限制和隔离进程的资源使用，可以为每个容器设定CPU,内存,网络带宽等资源的使用上限，确保一个容器的资源消耗不会影响宿主机或其他正在运行的容器。
-2. Namespaces用来隔离进程的资源视图，让容器只能看见自己内部的进程ID，网络资源和文件目录，而看不到宿主机的。
+1. **Cgroups** 用来限制和隔离进程的**资源使用**，可以为每个容器设定CPU,内存,网络带宽等资源的使用上限，确保一个容器的资源消耗不会影响宿主机或其他正在运行的容器。
+2. **Namespaces** 用来隔离进程的**资源视图**，让容器只能看见自己内部的进程ID，网络资源和文件目录，而看不到宿主机的。
 
-所以容器本质上还是一个特殊的进程，不过当进入容器内部后容器内部看起来就像是一个独立的操作系统，每个docker 容器都是一个独立的运行环境，都表现的像一个独立的Linux系统
+所以容器本质上还是一个==特殊的进程==，不过当进入容器内部后容器内部看起来就像是一个独立的操作系统，每个docker 容器都是一个独立的运行环境，都表现的像一个独立的Linux系统
 
 ## 进入容器
 
@@ -306,10 +306,10 @@ cat /etc/os-release
 
 ## Dockerfile 构造镜像
 
-1. Dockerfile 文件名字固定大写 Dockerfile，没有后缀
-2. 每一行是一条指令，大写关键字，参数小写
-3. 分层构建：每条指令生成一层镜像缓存，构建时会复用缓存加快速度
-4. 构建命令：docker build
+1. Dockerfile 文件名字**固定大写** Dockerfile，没有后缀
+2. 每一行是一条指令，**大写关键字**，参数小写
+3. **分层构建**：每条指令生成一层镜像缓存，构建时会复用缓存加快速度
+4. 构建命令：`docker build`
 
 构造镜像的Dockerfile如下
 
@@ -356,7 +356,7 @@ docker build -t my-demo:v1 .
 
 ### 桥接模式
 
-Docker 网络默认是bridge桥接模式
+Docker 网络默认是 **bridge 桥接模式**
 
 所有的容器默认都连接到这个网络，每个容器都分配了一个内部IP地址
 
@@ -364,21 +364,21 @@ Docker 网络默认是bridge桥接模式
 
 但容器网络与宿主机的网络是隔离的
 
-可以使用 docker network create 创建出子网
+可以使用 `docker network create` 创建出子网
 
 可以指定容器加入不同的子网，同一个子网可以相互通信，跨子网不可以通信
 
-同一个子网的容器可以使用名字互相访问
+同一个子网的容器可以==使用名字互相访问==
 
 ### 自动分配IP的子网
 
-创建一个叫network1的子网,自动分配IP地址
+创建一个叫 `network1` 的子网,自动分配IP地址
 
 ```bash
 docker network create network1
 ```
 
-运行并加入network1的指令
+运行并加入 `network1` 的指令
 
 ```bash
 docker run -d --name mysql8 \
@@ -389,7 +389,7 @@ docker run -d --name mysql8 \
 
 ### 指定静态IP的子网
 
-创建一个叫network1的子网，指定静态IP地址
+创建一个叫 `network1` 的子网，指定静态IP地址
 
 ```bash
 docker network create \
@@ -398,7 +398,7 @@ docker network create \
   network1
 ```
 
-运行并加入network1
+运行并加入 `network1`
 
 ```bash
 docker run -d --name mysql8 \
@@ -432,7 +432,7 @@ docker network inspect network1
 
 Docker容器直接共享宿主机的网络，容器直接使用主机的IP地址
 
-而且无需 -p 进行端口映射，容器内的服务直接运行在宿主机的端口上
+而且==无需 `-p` 进行端口映射==，容器内的服务直接运行在宿主机的端口上
 
 通过宿主机的IP和端口就能访问到容器
 
@@ -466,7 +466,7 @@ ip addr show
 
 ## Docker Compose
 
-用一个 yaml 文件一次性编排多个容器，一键启停一组服务，不用敲很长一串 docker run 命令
+用一个 yaml 文件一次性编排多个容器，一键启停一组服务，不用敲很长一串 `docker run` 命令
 
 可以简单的把docker compose文件理解成一个或多个的Docker run 命令，按照特定的格式列到了一个文件里
 
@@ -494,7 +494,7 @@ docker run -d \
   ubuntu:22.04
 ```
 
-在compose中不需要创建子网，在同一个compose文件中的所有容器会自动放在一个子网中。
+在compose中==不需要创建子网==，在同一个compose文件中的所有容器会自动放在一个子网中。
 
 compose创建
 
@@ -534,7 +534,7 @@ volumes:
 
 创建流程
 
-创建并写入docker-compose.yaml
+创建并写入 `docker-compose.yaml`
 
 ```bash
 vi docker-compose.yaml
@@ -576,11 +576,11 @@ docker compose -f <文件名> up -d
 
 | 项目 | 多条 docker run | docker compose yaml |
 | --- | --- | --- |
-| 启动 | 复制多条长命令手动执行 | 一条 up -d 一键整套启动 |
-| 网络 / 卷 | 需要手动提前network create、手动管理 | yml 内部声明，自动创建网络、命名卷 |
-| 服务访问 | 记住容器名字互相访问 | 直接用服务名（mysql）访问，不用记容器名 |
-| 修改配置 | 改完必须手动删容器，再复制整段 run 重建 | 修改 yml 后，compose up -d自动重建变更服务 |
-| 停止清理 | 要分别 stop、rm 容器、rm 网络、rm 卷 | 一条down统一清理整套资源 |
+| 启动 | 复制多条长命令手动执行 | 一条 `up -d` 一键整套启动 |
+| 网络 / 卷 | 需要手动提前 `network create`、手动管理 | yml 内部声明，自动创建网络、命名卷 |
+| 服务访问 | 记住容器名字互相访问 | 直接用服务名（`mysql`）访问，不用记容器名 |
+| 修改配置 | 改完必须手动删容器，再复制整段 run 重建 | 修改 yml 后，`compose up -d` 自动重建变更服务 |
+| 停止清理 | 要分别 stop、rm 容器、rm 网络、rm 卷 | 一条 `down` 统一清理整套资源 |
 | 适用场景 | 临时测试单个容器 | 多容器项目、开发环境、整套服务编排 |
 
 重要等价映射回顾
