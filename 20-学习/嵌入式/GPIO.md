@@ -83,8 +83,25 @@ GPIO基本结构如图所示,八种模式通过控制**P-MOS管、N-MOS管、上
 # 寄存器
 
 # 标准库初始化代码
+
+
+具体
 ```C
-GPIO_InitTypeDef GPIO_InitStructure
-# 开启对应区域的时钟,GPIO是APB2高速总线的
-RCC_APB2PeriphClockCmd(RCC_APB2Periph_<GPIO端口号>, ENABLE)
+void GPIO_Init(void)
+{
+	//初始化结构体变量
+	GPIO_InitTypeDef GPIO_InitStructure;
+	//开启对应区域的时钟,F1系列GPIO是APB2高速总线的
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_<GPIO端口号>, ENABLE);
+	//正式初始化结构体
+	//指定控制的引脚,要控制多个使用 | 
+	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_<引脚编号>;
+	//选择GPIO的模式,详情见上面的八种模式
+	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_Out_PP; 
+	//设置GPIO的最大输出速度,输入模式可以不写
+	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
+	//调用初始化函数完成初始化
+	GPIO_Init(GPIOA, &GPIO_InitStruct);
+}
 ```
+
