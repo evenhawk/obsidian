@@ -83,3 +83,8 @@ GPIO基本结构如图所示,八种模式通过控制**P-MOS管、N-MOS管、上
 # 寄存器
 
 # 标准库初始化代码
+```C
+GPIO_InitTypeDef GPIO_InitStructure
+# 开启对应区域的时钟,GPIO是APB2高速总线的
+RCC_APB2PeriphClockCmd(RCC_APB2Periph_<GPIO端口号>, ENABLE)
+```
