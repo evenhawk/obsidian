@@ -86,17 +86,6 @@ void RCC_HSE_72M_Init(void)
     //验证系统时钟来源是否为PLL
     while(RCC_GetSYSCLKSource() != 0x08);
 }
-
-int main(void)
-{
-    RCC_HSE_72M_Init();
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
-
-    while(1)
-    {
-
-    }
-}
 ```
 
 **使用HEI不开PLL倍频,直接用 HSI 当系统时钟源**
@@ -142,4 +131,41 @@ void RCC_HSI_PLL_64M_Init(void)
     while(RCC_GetSYSCLKSource() != 0x08);
 }
 ```
+
+## 总线上的外设
+### AHB 总线
+
+AHB 是高速总线，`RCC_AHBPeriphClockCmd` 开启
+
+- DMA1、DMA2
+- CRC 校验单元
+- FSMC（外部存储器扩展，只有大容量型号才有）
+- SDIO（SD 卡接口，大容量）
+- RCC 本身也挂在 AHB
+- Flash、SRAM：存储器，不需要软件开门控时钟
+
+### APB2 高速外设总线
+
+`RCC_APB2PeriphClockCmd`
+
+- GPIOA / GPIOB / GPIOC / GPIOD / GPIOE / GPIOF / GPIOG
+- AFIO（复用功能重映射、EXTI 外部中断控制）
+- TIM1（高级定时器，带死区、刹车）、TIM8（大容量）
+- ADC1、ADC2、ADC3
+- SPI1
+- USART1
+
+### APB1 低速外设总线
+
+`RCC_APB1PeriphClockCmd`
+
+- TIM2、TIM3、TIM4、TIM5（通用定时器）、TIM6、TIM7（基本定时器）
+- SPI2、SPI3
+- USART2、USART3、UART4、UART5
+- I2C1、I2C2
+- CAN
+- USB
+- WWDG 窗口看门狗
+- BKP 备份域
+- PWR 电源控制
 
