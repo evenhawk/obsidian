@@ -51,3 +51,40 @@ HSE的配置流程
 HSI 不同的就是在配置PLL的时候要先分频系数为2,然后倍频系数为16为最大
 (8/2)* 16 = 64M
 还有最开始没有等待HSI使能的函数,要通过操作CR寄存器的方式来验证
+```C
+#include "stm32f10x.h"
+
+void RCC_HSE_72M_Init(void)
+{
+	//调用函数清零配置
+    RCC_DeInit();
+    //配置HSE使能
+    RCC_HSEConfig(RCC_HSE_ON);
+    //等待使能完成
+    while(RCC_GetFlagStatus(RCC_FLAG_HSERDY) == RESET);
+	//锁相环配置,这里不对HSE分频,倍频系数9,原来8M,过PLL后变为72M
+    RCC_PLLConfig(RCC_PLLSource_HSE_Div1, RCC_PLLMul_9);
+    //使能锁相环
+    RCC_PLLCmd(ENABLE);
+    //等待锁相环配置完成
+    while(RCC_GetFlagStatus(RCC_FLAG_PLLRDY) == RESET);
+	//配置三个预分频器
+    RCC_HCLKConfig(RCC_SYSCLK_Div1);
+    RCC_PCLK1Config(RCC_HCLK_Div2);
+    RCC_PCLK2Config(RCC_HCLK_Div1);
+	//设置系统
+    RCC_SYSCLKConfig(RCC_SYSCLKSource_PLLCLK);
+    while(RCC_GetSYSCLKSource() != 0x08);
+}
+
+int main(void)
+{
+    RCC_HSE_72M_Init();
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
+
+    while(1)
+    {
+
+    }
+}
+```
