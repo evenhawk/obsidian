@@ -72,8 +72,9 @@ void RCC_HSE_72M_Init(void)
     RCC_HCLKConfig(RCC_SYSCLK_Div1);
     RCC_PCLK1Config(RCC_HCLK_Div2);
     RCC_PCLK2Config(RCC_HCLK_Div1);
-	//设置系统
+	//设置系统时钟来源为PLL锁相环
     RCC_SYSCLKConfig(RCC_SYSCLKSource_PLLCLK);
+    //验证系统时钟来源是否为PLL
     while(RCC_GetSYSCLKSource() != 0x08);
 }
 
