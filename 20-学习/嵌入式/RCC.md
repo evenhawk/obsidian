@@ -1,12 +1,3 @@
----
-title: STM32 RCC 时钟配置
-tags:
-  - stm32
-  - 嵌入式
-  - 时钟
-status: draft
-updated: 2026-10-06
----
 # STM32 RCC 时钟
 
 ## 介绍
@@ -30,12 +21,15 @@ HSE 的频率取决于开发板上的外部晶振，常见值为 8 MHz。
 
 然后PLL出来的频率再前往三个预分频器,三个预分频器HCLK,PCLK1,PCLK2同时对应三条总线AHB系统总线,APB1低速外设总线 ,APB2高速外设总线
 在这里HCLK分频系数为1,代表不分频,出来仍然是72M
-PCLK1分频系数为2,毕竟是低速总线,出来的是36M
+PCLK1分频系数为2, STM32F1 规定 **APB1 最高 36MHz**
 PCLK2分频系数为1,输出72M
 然后使能系统时钟,设置时钟源为PLL
 
-但是注意PLL在程序中要在设置三个预分频器之后设置,因为在作为系统时钟来源时不能关闭锁相环
+**PLL 参数只能在 PLL 关闭时改**，所以必须在切换 `SYSCLK` 到 PLL 之前配好
 ## 配置流程
+startup 启动文件里会先调用 `SystemInit()`,标准库在 `system_stm32f10x.c` 里已经把时钟配到 72M(宏 `SYSCLK_FREQ_72MHz`),所以很多人一行时钟配置都不写也能跑到 72M
+自己再写一遍配置之前要先知道这件事,否则等于重复配置
+
 HSE的配置流程
 1. 先把所有的配置清零
 2. 配置HSE使能
@@ -51,7 +45,6 @@ HSE的配置流程
 唯一要设置为参数的就是配置PLL时候的倍频系数
 HSI 不同的就是在配置PLL的时候要先分频系数为2,然后倍频系数为16为最大
 (8/2)* 16 = 64M
-还有最开始没有等待HSI使能的函数,要通过操作CR寄存器的方式来验证
 ## 配置代码
 
 **使用HSE到72M**
@@ -60,6 +53,8 @@ HSI 不同的就是在配置PLL的时候要先分频系数为2,然后倍频系�
 * PCLK1:2分频72/2=36M,传递给APB1低速外设总线
 * PCLK2:1分频72M,传递给APB2高速外设总线
 *超频可以修改PLL锁相环的倍频因子*
+*但 `RCC_PLLMul_16` 已经是最大档,HSE 8M × 16 = 128M*
+*超频之后 Flash 等待周期、ADC 和 USB 的分频都要跟着改,稳定性不保证*
 ```C
 #include "stm32f10x.h"
 
@@ -69,8 +64,14 @@ void RCC_HSE_72M_Init(void)
     RCC_DeInit();
     //配置HSE使能
     RCC_HSEConfig(RCC_HSE_ON);
-    //等待使能完成
-    while(RCC_GetFlagStatus(RCC_FLAG_HSERDY) == RESET);
+    //等待使能完成,起振失败就退出,系统留在HSI 8M,不要死等
+    if(RCC_WaitForHSEStartUp() == ERROR)
+    {
+        return;
+    }
+    //72M要2个Flash等待周期,同时打开预取缓冲
+    FLASH_SetLatency(FLASH_Latency_2);
+    FLASH_PrefetchBufferCmd(FLASH_PrefetchBuffer_Enable);
 	//锁相环配置,这里不对HSE分频,倍频系数9,原来8M,过PLL后变为72M
     RCC_PLLConfig(RCC_PLLSource_HSE_Div1, RCC_PLLMul_9);
     //使能锁相环
@@ -88,7 +89,7 @@ void RCC_HSE_72M_Init(void)
 }
 ```
 
-**使用HEI不开PLL倍频,直接用 HSI 当系统时钟源**
+**使用HSI不开PLL倍频,直接用 HSI 当系统时钟源**
 AHB:8M
 PCLK1:4M
 PCLK2:8M
@@ -101,6 +102,7 @@ void RCC_HSI_Init(void)
 
     RCC_SYSCLKConfig(RCC_SYSCLKSource_HSI);
     while(RCC_GetSYSCLKSource() != 0x00);
+    //8M在24M以内,Flash等待周期保持默认0,不用改
 
     RCC_HCLKConfig(RCC_SYSCLK_Div1);
     RCC_PCLK1Config(RCC_HCLK_Div2);
@@ -122,6 +124,9 @@ void RCC_HSI_PLL_64M_Init(void)
     RCC_PLLConfig(RCC_PLLSource_HSI_Div2, RCC_PLLMul_16);
     RCC_PLLCmd(ENABLE);
     while(RCC_GetFlagStatus(RCC_FLAG_PLLRDY) == RESET);
+    //64M同样要2个Flash等待周期
+    FLASH_SetLatency(FLASH_Latency_2);
+    FLASH_PrefetchBufferCmd(FLASH_PrefetchBuffer_Enable);
 
     RCC_HCLKConfig(RCC_SYSCLK_Div1);
     RCC_PCLK1Config(RCC_HCLK_Div2);
