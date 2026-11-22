@@ -35,6 +35,7 @@ PCLK2分频系数为1,输出72M
 然后使能系统时钟,设置时钟源为PLL
 
 但是注意PLL在程序中要在设置三个预分频器之后设置,因为在作为系统时钟来源时不能关闭锁相环
+## 配置流程
 HSE的配置流程
 1. 先把所有的配置清零
 2. 配置HSE使能
@@ -51,6 +52,14 @@ HSE的配置流程
 HSI 不同的就是在配置PLL的时候要先分频系数为2,然后倍频系数为16为最大
 (8/2)* 16 = 64M
 还有最开始没有等待HSI使能的函数,要通过操作CR寄存器的方式来验证
+## 配置代码
+
+**使用HSE到72M**
+8M过PLL倍频9变为72M
+* HCLK:1分频不变72M,传递给AHB系统总线
+* PCLK1:2分频72/2=36M,传递给APB1低速外设总线
+* PCLK2:1分频72M,传递给APB2高速外设总线
+*超频可以修改PLL锁相环的倍频因子*
 ```C
 #include "stm32f10x.h"
 
@@ -89,3 +98,48 @@ int main(void)
     }
 }
 ```
+
+**使用HEI不开PLL倍频,直接用 HSI 当系统时钟源**
+AHB:8M
+PCLK1:4M
+PCLK2:8M
+```C
+void RCC_HSI_Init(void)
+{
+    RCC_DeInit();
+    RCC_HSICmd(ENABLE);
+    while(RCC_GetFlagStatus(RCC_FLAG_HSIRDY) == RESET);
+
+    RCC_SYSCLKConfig(RCC_SYSCLKSource_HSI);
+    while(RCC_GetSYSCLKSource() != 0x00);
+
+    RCC_HCLKConfig(RCC_SYSCLK_Div1);
+    RCC_PCLK1Config(RCC_HCLK_Div2);
+    RCC_PCLK2Config(RCC_HCLK_Div1);
+}
+```
+
+**HSI经过PLL倍频**
+AHB:64M
+PCLK1:32M
+PCLK2:64M
+```C
+void RCC_HSI_PLL_64M_Init(void)
+{
+    RCC_DeInit();
+    RCC_HSICmd(ENABLE);
+    while(RCC_GetFlagStatus(RCC_FLAG_HSIRDY) == RESET);
+
+    RCC_PLLConfig(RCC_PLLSource_HSI_Div2, RCC_PLLMul_16);
+    RCC_PLLCmd(ENABLE);
+    while(RCC_GetFlagStatus(RCC_FLAG_PLLRDY) == RESET);
+
+    RCC_HCLKConfig(RCC_SYSCLK_Div1);
+    RCC_PCLK1Config(RCC_HCLK_Div2);
+    RCC_PCLK2Config(RCC_HCLK_Div1);
+
+    RCC_SYSCLKConfig(RCC_SYSCLKSource_PLLCLK);
+    while(RCC_GetSYSCLKSource() != 0x08);
+}
+```
+
