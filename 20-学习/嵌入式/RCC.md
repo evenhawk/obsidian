@@ -7,7 +7,6 @@ tags:
 status: draft
 updated: 2026-10-06
 ---
-
 # STM32 RCC 时钟配置
 
 STM32 常见的高速时钟源包括 HSI 内部 RC 振荡器和 HSE 外部晶振。
