@@ -16,7 +16,7 @@ RCC全名Reset and clock control 复位与时钟控制器
 
 ## 时钟树
 时钟树主体结构如图所示
-![[Pasted image 20261122092055.png]]  
+![[Pasted image 20261122092055.png]]
 
 
 STM32 常见的高速时钟源包括 HSI 内部 RC 振荡器和 HSE 外部晶振。
