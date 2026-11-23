@@ -1,0 +1,7 @@
+{
+	"nodes":[
+		{"id":"1ced5d23223a1134","x":-180,"y":-120,"width":250,"height":60,"type":"text","text":"result:2026.11月金价下降"},
+		{"id":"30aea4b17c017358","x":-400,"y":120,"width":250,"height":60,"type":"text","text":"美债利率上升"}
+	],
+	"edges":[]
+}
