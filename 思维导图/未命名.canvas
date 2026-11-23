@@ -1,6 +1,6 @@
 {
 	"nodes":[
-		{"id":"596981257938f71b","x":-800,"y":-680,"width":2680,"height":480,"type":"group","label":"未命名组"},
+		{"id":"596981257938f71b","x":-800,"y":-680,"width":2680,"height":480,"type":"group","label":"2025/8~2026/2黄金上涨推动"},
 		{"id":"e20ae2c11142d893","type":"text","text":"美联储加息预期:12月加息","x":-685,"y":-20,"width":250,"height":60},
 		{"id":"30aea4b17c017358","type":"text","text":"美债利率上升","x":-355,"y":-20,"width":250,"height":60},
 		{"id":"659cd06ad9cdae1b","type":"text","text":"持有黄金的机会成本下降","x":-55,"y":-20,"width":250,"height":60},
