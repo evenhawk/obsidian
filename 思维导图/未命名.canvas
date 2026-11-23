@@ -1,20 +1,39 @@
 {
 	"nodes":[
+		{"id":"596981257938f71b","x":-800,"y":-680,"width":2680,"height":480,"type":"group","label":"未命名组"},
 		{"id":"e20ae2c11142d893","type":"text","text":"美联储加息预期:12月加息","x":-685,"y":-20,"width":250,"height":60},
 		{"id":"30aea4b17c017358","type":"text","text":"美债利率上升","x":-355,"y":-20,"width":250,"height":60},
 		{"id":"659cd06ad9cdae1b","type":"text","text":"持有黄金的机会成本下降","x":-55,"y":-20,"width":250,"height":60},
 		{"id":"1ced5d23223a1134","type":"text","text":"result:2026.11月金价下降","x":260,"y":-20,"width":250,"height":60},
-		{"id":"4d77f535768ea9aa","x":-696,"y":-413,"width":250,"height":60,"type":"text","text":"市场认为美国经济走弱"},
 		{"id":"cc2ee374c76879d2","x":-295,"y":-413,"width":250,"height":60,"type":"text","text":"美联储降息"},
-		{"id":"839b0823b8478fb8","x":-707,"y":-321,"width":250,"height":60,"type":"text","text":"美伊局势紧张"},
-		{"id":"124326e1e5bf90e3","x":-178,"y":-587,"width":250,"height":60,"type":"text","text":"黄金历史新高"},
-		{"id":"8f1c5cd6038f7456","x":120,"y":-587,"width":250,"height":60,"type":"text","text":"上方无套牢盘"}
+		{"id":"adc277489166ac96","x":-305,"y":-554,"width":250,"height":60,"type":"text","text":"美元信用降低"},
+		{"id":"aec41664125d46b5","x":55,"y":-539,"width":250,"height":60,"type":"text","text":"利好黄金"},
+		{"id":"142b3ed826371bfb","x":364,"y":-539,"width":250,"height":60,"type":"text","text":"投行上调目标价格"},
+		{"id":"a8adb99f12d10d72","x":658,"y":-539,"width":250,"height":60,"type":"text","text":"ETF涌入"},
+		{"id":"124326e1e5bf90e3","x":960,"y":-535,"width":250,"height":53,"type":"text","text":"黄金历史新高"},
+		{"id":"8f1c5cd6038f7456","x":1258,"y":-535,"width":250,"height":53,"type":"text","text":"上方无套牢盘,技术性追高"},
+		{"id":"6586b133b6ad697e","x":1578,"y":-535,"width":250,"height":53,"type":"text","text":"正反馈上升"},
+		{"id":"6859879b72a4a260","x":317,"y":-400,"width":250,"height":60,"type":"text","text":"央行持续购金"},
+		{"id":"2706f161167acf85","x":658,"y":-400,"width":250,"height":60,"type":"text","text":"市场信心"},
+		{"id":"839b0823b8478fb8","x":-696,"y":-321,"width":250,"height":61,"type":"text","text":"美伊局势紧张"},
+		{"id":"4d77f535768ea9aa","x":-693,"y":-418,"width":250,"height":60,"type":"text","text":"市场认为美国经济走弱"},
+		{"id":"eb2458e3001333db","x":-693,"y":-559,"width":250,"height":60,"type":"text","text":"美国关税政策不定"}
 	],
 	"edges":[
 		{"id":"b853d72656d74e96","fromNode":"e20ae2c11142d893","fromSide":"right","toNode":"30aea4b17c017358","toSide":"left"},
 		{"id":"5971006bc7a88c27","fromNode":"30aea4b17c017358","fromSide":"right","toNode":"659cd06ad9cdae1b","toSide":"left"},
 		{"id":"6fba94ff3e68242b","fromNode":"659cd06ad9cdae1b","fromSide":"right","toNode":"1ced5d23223a1134","toSide":"left"},
 		{"id":"893c4652eb8fb8e2","fromNode":"4d77f535768ea9aa","fromSide":"right","toNode":"cc2ee374c76879d2","toSide":"left"},
-		{"id":"6fcba6b173c26a0b","fromNode":"124326e1e5bf90e3","fromSide":"right","toNode":"8f1c5cd6038f7456","toSide":"left"}
+		{"id":"6fcba6b173c26a0b","fromNode":"124326e1e5bf90e3","fromSide":"right","toNode":"8f1c5cd6038f7456","toSide":"left"},
+		{"id":"08ee14cafc2ae1e3","fromNode":"8f1c5cd6038f7456","fromSide":"right","toNode":"6586b133b6ad697e","toSide":"left"},
+		{"id":"5ce0e13b817dd447","fromNode":"eb2458e3001333db","fromSide":"right","toNode":"adc277489166ac96","toSide":"left"},
+		{"id":"c2f03b31b196fa07","fromNode":"6859879b72a4a260","fromSide":"right","toNode":"2706f161167acf85","toSide":"left"},
+		{"id":"7c210d642afc388a","fromNode":"839b0823b8478fb8","fromSide":"right","toNode":"cc2ee374c76879d2","toSide":"left"},
+		{"id":"e27c3f56e528c2da","fromNode":"adc277489166ac96","fromSide":"right","toNode":"aec41664125d46b5","toSide":"left"},
+		{"id":"1ca859b5fdf943c2","fromNode":"cc2ee374c76879d2","fromSide":"right","toNode":"aec41664125d46b5","toSide":"left"},
+		{"id":"cb7502b37b940d08","fromNode":"aec41664125d46b5","fromSide":"right","toNode":"142b3ed826371bfb","toSide":"left"},
+		{"id":"768109d00c66b3c4","fromNode":"142b3ed826371bfb","fromSide":"right","toNode":"a8adb99f12d10d72","toSide":"left"},
+		{"id":"d8faac23b162ae9f","fromNode":"a8adb99f12d10d72","fromSide":"right","toNode":"124326e1e5bf90e3","toSide":"left"},
+		{"id":"38dceb51564fe0d9","fromNode":"2706f161167acf85","fromSide":"right","toNode":"124326e1e5bf90e3","toSide":"left"}
 	]
 }
